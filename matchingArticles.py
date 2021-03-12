@@ -34,5 +34,6 @@ def compile_articles(fox=True, cnn=True, text=False):
     elif not fox and cnn:
         return cnn_articles
     else:
-        return fox_articles, cnn_articles
+        return cnn_articles, fox_articles
+
 
