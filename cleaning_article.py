@@ -1,12 +1,11 @@
 """
 File used to clean the articles.
-
 You may need to download the following packages:
 nltk.download('wordnet')
 nltk.download('stopwords')
 """
 import nltk
-from nltk.corpus import wordnet as wn 
+from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from nltk.stem.wordnet import WordNetLemmatizer
@@ -18,7 +17,7 @@ lem = WordNetLemmatizer()
 
 
 def cleaning_specifics(phrase: str) -> str:
-    
+
     """
     This function removes the ads found in the different articles.
     It also does a cleanup that is necessary so as not to lose the meaning after tokenization.
@@ -33,13 +32,13 @@ def cleaning_specifics(phrase: str) -> str:
     phrase = re.sub(r"This story was originally published on \w+|[.] \d+, \d+", "", phrase)
     phrase = re.sub(r"\w+ contributed to this report", "", phrase)
     phrase = re.sub(r"\w+ \w+ contributed to this report", "", phrase)
-    phrase = re.sub(r"\w+ \w+ \w+ contributed to this report", "", phrase) 
+    phrase = re.sub(r"\w+ \w+ \w+ contributed to this report", "", phrase)
     phrase = re.sub(r"CLICK HERE FOR MORE SPORTS COVERAGE ON FOXNEWS.COM", "", phrase)
     phrase = re.sub(r"CLICK HERE TO GET THE FOX NEWS APP", "", phrase)
     phrase = re.sub(r"\n\n[A-Z\s\d\'\-\!,\@\#\$\%\^\&\*\(\)\[\+\=\]\{\}:;\.<>]{1,}\n\n", "", phrase)
     phrase = re.sub(r"ADVERTISEMENT", "", phrase)
-    phrase = re.sub(r"Read More", "", phrase) 
-    phrase = re.sub(r"^\(CNN\)", "", phrase) 
+    phrase = re.sub(r"Read More", "", phrase)
+    phrase = re.sub(r"^\(CNN\)", "", phrase)
     phrase = re.sub(r'\bAL\b', 'Alabama', phrase)
     phrase = re.sub(r'\bAK\b', 'Alaska', phrase)
     phrase = re.sub(r'\bAZ\b', 'Arizona', phrase)
@@ -94,7 +93,7 @@ def cleaning_specifics(phrase: str) -> str:
 
 
 def cleaning(phrase: str) -> str:
-    
+
     """
     This function clears the necessary text so as not to lose the meaning after tokenization.
     It is not case sensitive.
@@ -103,42 +102,42 @@ def cleaning(phrase: str) -> str:
     """
 
     phrase = re.sub(r"won\'t", "will not", phrase)
-    phrase = re.sub(r"can\'t", "can not", phrase)  
+    phrase = re.sub(r"can\'t", "can not", phrase)
     phrase = re.sub(r"n\'t", " not", phrase)
-    phrase = re.sub(r"\'re", " are", phrase) 
-    phrase = re.sub(r"\'s", "", phrase) 
+    phrase = re.sub(r"\'re", " are", phrase)
+    phrase = re.sub(r"\'s", "", phrase)
     phrase = re.sub(r"\'d", " would", phrase)
     phrase = re.sub(r"\'ll", " will", phrase)
     phrase = re.sub(r"\'t", " not", phrase)
     phrase = re.sub(r"\'ve", " have", phrase)
     phrase = re.sub(r"\'m", " am", phrase)
-    phrase = re.sub(r"covid\-19", " covid19", phrase)  
-    phrase = re.sub(r'\bcnn\b', "", phrase)  
-    phrase = re.sub(r'\bfox\b', "", phrase)  
+    phrase = re.sub(r"covid\-19", " covid19", phrase)
+    phrase = re.sub(r'\bcnn\b', "", phrase)
+    phrase = re.sub(r'\bfox\b', "", phrase)
     phrase = re.sub(r"\sp.m.\s", " pm ", phrase)
     phrase = re.sub(r"\sa.m.\s", " am ", phrase)
     phrase = re.sub(r"\si.e.\s", " ie ", phrase)
-    phrase = re.sub(r"\bjan.\s", " january ", phrase) 
-    phrase = re.sub(r"\sfeb.\s", " february ", phrase) 
-    phrase = re.sub(r"\smar.\s", " march ", phrase) 
-    phrase = re.sub(r"\sapr.\s", " april ", phrase)  
-    phrase = re.sub(r"\saug.\s", " august ", phrase) 
-    phrase = re.sub(r"\ssept.\s", " september ", phrase) 
-    phrase = re.sub(r"\soct.\s", " october ", phrase) 
-    phrase = re.sub(r"\snov.\s", " november ", phrase) 
-    phrase = re.sub(r"\sdec.\s", " december ", phrase) 
-    phrase = re.sub(r'\ssun.\s', " sunday ", phrase) 
-    phrase = re.sub(r"\smon.\s", " monday ", phrase)  
-    phrase = re.sub(r"\sthurs.\s|\sthur.\s|\sthu.\s", " thursday ", phrase)  
-    phrase = re.sub(r"\stues.\s|\stue.\s|\stu.\s", " tuesday ", phrase)  
-    phrase = re.sub(r"\swed.\s", "wednesday", phrase) 
-    phrase = re.sub(r"\sfri.\s", "friday", phrase) 
-    phrase = re.sub(r"\ssat.\s", "saturday", phrase)  
+    phrase = re.sub(r"\bjan.\s", " january ", phrase)
+    phrase = re.sub(r"\sfeb.\s", " february ", phrase)
+    phrase = re.sub(r"\smar.\s", " march ", phrase)
+    phrase = re.sub(r"\sapr.\s", " april ", phrase)
+    phrase = re.sub(r"\saug.\s", " august ", phrase)
+    phrase = re.sub(r"\ssept.\s", " september ", phrase)
+    phrase = re.sub(r"\soct.\s", " october ", phrase)
+    phrase = re.sub(r"\snov.\s", " november ", phrase)
+    phrase = re.sub(r"\sdec.\s", " december ", phrase)
+    phrase = re.sub(r'\ssun.\s', " sunday ", phrase)
+    phrase = re.sub(r"\smon.\s", " monday ", phrase)
+    phrase = re.sub(r"\sthurs.\s|\sthur.\s|\sthu.\s", " thursday ", phrase)
+    phrase = re.sub(r"\stues.\s|\stue.\s|\stu.\s", " tuesday ", phrase)
+    phrase = re.sub(r"\swed.\s", "wednesday", phrase)
+    phrase = re.sub(r"\sfri.\s", "friday", phrase)
+    phrase = re.sub(r"\ssat.\s", "saturday", phrase)
     return phrase
 
 
 def data_cleaning(s, lst = True):
-    
+
     """
     Use cleaning_specifics() and cleaning() to clean the text.
     It also tokenize the text adn removes the most used words in english.
@@ -147,12 +146,12 @@ def data_cleaning(s, lst = True):
     :return: cleaned, tokenized or un-tokenized text.
     """
 
-    string = cleaning_specifics(s) 
+    string = cleaning_specifics(s)
     string = remove_stopwords(string.lower())
     string = cleaning(string)
     rgx = re.compile("\b\d+(?:%|percent\b)|(?:\w)+")
-    txt = rgx.findall(string) 
-    txt = [lem.lemmatize(word) for word in txt]    
+    txt = rgx.findall(string)
+    txt = [lem.lemmatize(word) for word in txt]
 
     if not lst:
 
@@ -161,7 +160,7 @@ def data_cleaning(s, lst = True):
 
 
 def text_lemmatizer(tokens):
-    
+
     """
     Lemmatization of the text. Change all forms of a words to its root word (verbs to presents, nouns to singular...)
     Removes words of less or equal than one letter.
@@ -188,11 +187,15 @@ def text_lemmatizer(tokens):
 
 
 def run(all_articles):
-    
-    """
-    Puts together all the previous functions (cleaning_specifics(), cleaning(), data_cleaning(), text_lemmatizer()) into one
-    :param: List of raw/plain un-tokenized articles.
-    :return: List of cleaned-tokenized (by words) articles.
-    """
 
-    return [text_lemmatizer(data_cleaning(article)) for article in all_articles]
+    '''
+    Puts together all the previous functions (cleaning_specifics(), cleaning(), data_cleaning(), text_lemmatizer()) into one.
+    :param: List of raw/plain un-tokenized articles.
+    :return: If the input is a list of articles it return a list of cleaned-tokenized (by words) articles.
+             If the input is a single article, it return a cleaned-tokenized (by words) article.
+    '''
+
+    if len(all_articles) == 1:
+        return text_lemmatizer(data_cleaning(all_articles))
+    else:
+        return [text_lemmatizer(data_cleaning(article)) for article in all_articles]
