@@ -188,12 +188,12 @@ def text_lemmatizer(tokens):
 
 def run(all_articles):
 
-    '''
+    """
     Puts together all the previous functions (cleaning_specifics(), cleaning(), data_cleaning(), text_lemmatizer()) into one.
     :param: List of raw/plain un-tokenized articles.
     :return: If the input is a list of articles it return a list of cleaned-tokenized (by words) articles.
              If the input is a single article, it return a cleaned-tokenized (by words) article.
-    '''
+    """
 
     if len(all_articles) == 1:
         return text_lemmatizer(data_cleaning(all_articles))
