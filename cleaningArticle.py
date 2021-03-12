@@ -1,20 +1,32 @@
-import nltk
-nltk.download('punkt')
-nltk.download('wordnet') 
-nltk.download('punkt')
+'''
+File used to clean the articles.
+
+You may need to download the following packages:
 nltk.download('wordnet')
-nltk.download('averaged_perceptron_tagger')
 nltk.download('stopwords')
+'''
+import nltk
 from nltk.corpus import wordnet as wn 
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
-from nltk.stem.wordnet import WordNetLemmatizer 
-Lem = WordNetLemmatizer() 
+from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.corpus import stopwords
 from gensim.parsing.preprocessing import remove_stopwords
-import re, string 
+import re
+import string
+lem = WordNetLemmatizer()
 
-def cleaningSpecifics(phrase):
+
+def cleaning_specifics(phrase: str) -> str:
+    
+    '''
+    This function removes the ads found in the different articles.
+    It also does a cleanup that is necessary so as not to lose the meaning after tokenization.
+    It is case sensitive.
+    :param phrase: raw/plain article (not tokenized).
+    :return: raw/plain article (not tokenized) without ads and without the additional comments from the newspapers.
+    '''
+
     phrase = re.sub(r"\n\nLoading...\n\nNote: This story was updated at \d+:\d+ \w.\w. \w+ \w+ \w+|[.] \d+", "", phrase)
     phrase = re.sub(r"and will be updated periodically, as new data are released.", "", phrase)
     phrase = re.sub(r"Loading...", "", phrase)
@@ -29,7 +41,7 @@ def cleaningSpecifics(phrase):
     phrase = re.sub(r"Read More", "", phrase) 
     phrase = re.sub(r"^\(CNN\)", "", phrase) 
     phrase = re.sub(r'\bAL\b', 'Alabama', phrase)
-    phrase = re.sub(r'\bAK\b','Alaska', phrase)
+    phrase = re.sub(r'\bAK\b', 'Alaska', phrase)
     phrase = re.sub(r'\bAZ\b', 'Arizona', phrase)
     phrase = re.sub(r'\bAR\b', 'Arkansas', phrase)
     phrase = re.sub(r'\bCA\b', 'California', phrase)
@@ -80,7 +92,15 @@ def cleaningSpecifics(phrase):
     phrase = re.sub(r'\bWY\b', 'Wyoming', phrase)
     return phrase
 
-def cleaning(phrase): 
+def cleaning(phrase: str) -> str:
+    
+    '''
+    This function clears the necessary text so as not to lose the meaning after tokenization.
+    It is not case sensitive.
+    :param phrase: raw/plain article (not tokenized).
+    :return: raw/plain article (not tokenized).
+    '''
+
     phrase = re.sub(r"won\'t", "will not", phrase)
     phrase = re.sub(r"can\'t", "can not", phrase)  
     phrase = re.sub(r"n\'t", " not", phrase)
@@ -115,19 +135,38 @@ def cleaning(phrase):
     phrase = re.sub(r"\ssat.\s", "saturday", phrase)  
     return phrase
 
-def DataCleaning(s, lst = True): 
-    string = cleaningSpecifics(s) 
+def data_cleaning(s, lst = True):
+    
+    '''
+    Use cleaning_specifics() and cleaning() to clean the text.
+    It also tokenize the text adn removes the most used words in english.
+    :param s: raw/plain article (not tokenized).
+    :param lst: If True, returns the text tokenized by words. If false returns the text un-tokenized. Default value: True.
+    :return: cleaned, tokenized or un-tokenized text.
+    '''
+
+    string = cleaning_specifics(s) 
     string = remove_stopwords(string.lower())
-    rgx = re.compile("\b\d+(?:%|percent\b)|(?:\w)+") 
-    string = cleaning(string) 
+    string = cleaning(string)
+    rgx = re.compile("\b\d+(?:%|percent\b)|(?:\w)+")
     txt = rgx.findall(string) 
-    txt = [Lem.lemmatize(word) for word in txt]    
+    txt = [lem.lemmatize(word) for word in txt]    
 
-    if lst == False:
+    if not lst:
+
         txt = ' '.join(txt)
-    return(txt)
+    return txt
 
-def Lemmatizer(tokens):
+def text_lemmatizer(tokens):
+    
+    '''
+    Lemmatization of the text. Change all forms of a words to its root word (verbs to presents, nouns to singular...)
+    Removes words of less or equal than one letter.
+    Removes the most used words in english (with a different algorithm than data_cleaning()).
+    :param tokens: Text tokenized by words.
+    :return: Lemmatized and tokenized text by words.
+    '''
+
     stop_words = stopwords.words('english')
     cleaned_tokens = []
 
@@ -138,11 +177,18 @@ def Lemmatizer(tokens):
             pos = 'v'
         else:
             pos = 'a'
-        token = Lem.lemmatize(token, pos)
+        token = lem.lemmatize(token, pos)
 
         if len(token) > 1 and token not in string.punctuation and token.lower() not in stop_words:
             cleaned_tokens.append(token.lower())
     return cleaned_tokens
 
-def run(txt):
-    return([Lemmatizer(DataCleaning(article)) for article in txt])
+def run(all_articles):
+    
+    '''
+    Puts together all the previous functions (cleaning_specifics(), cleaning(), data_cleaning(), text_lemmatizer()) into one
+    :param: List of raw/plain un-tokenized articles.
+    :return: List of cleaned-tokenized (by words) articles.
+    '''
+
+    return [text_lemmatizer(data_cleaning(article)) for article in all_articles]
