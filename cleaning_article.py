@@ -195,7 +195,7 @@ def run(all_articles):
              If the input is a single article, it return a cleaned-tokenized (by words) article.
     """
 
-    if len(all_articles) == 1:
+    if isinstance(all_articles, str):
         return text_lemmatizer(data_cleaning(all_articles))
     else:
         return [text_lemmatizer(data_cleaning(article)) for article in all_articles]
