@@ -17,7 +17,7 @@ def compile_articles(fox=True, cnn=True, text=False):
 
     fox_articles = []
     cnn_articles = []
-    for line in open('articles.json', 'r'):
+    for line in open('articles.json', 'r', encoding = 'utf-8'):
         article = json.loads(line)
         if article['site'] == 'FOX':
             if text:
@@ -48,7 +48,7 @@ def compile_politics(fox=True, cnn=True, text=False):
 
     fox_articles = []
     cnn_articles = []
-    for line in open('politics.json', 'r'):
+    for line in open('politics.json', 'r', encoding = 'utf-8'):
         article = json.loads(line)
         if article['site'] == 'FOX':
             if text:
