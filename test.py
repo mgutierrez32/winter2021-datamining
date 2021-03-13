@@ -6,10 +6,7 @@ left-leaning or right-leaning and give the probability that
 the article is left or right, as well as giving a score as
 to how extreme the article leans towards one side or the other.
 """
-import nltk
-# nltk.download('wordnet')
-# nltk.download('stopwords')
-# nltk.download('averaged_perceptron_tagger')
+import nltk 
 from nltk import classify
 from nltk import NaiveBayesClassifier
 import newspaper
@@ -17,6 +14,18 @@ import cleaning_article
 import matching_articles
 import requests
 from sklearn.model_selection import train_test_split
+try:
+    from nltk import wordnet 
+except:
+    nltk.download('wordnet')
+try:
+    from nltk import stopwords 
+except:
+    nltk.download('stopwords')
+try:
+    from nltk import averaged_perceptron_tagger 
+except:
+    nltk.download('averaged_perceptron_tagger')
 
 def get_dictionary(cleaned_tokens_list):
     """
