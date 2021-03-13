@@ -1,8 +1,5 @@
 """
-File used to clean the articles.
-You may need to download the following packages:
-nltk.download('wordnet')
-nltk.download('stopwords')
+File used to clean the articles. 
 """
 import nltk
 from nltk.corpus import wordnet as wn
@@ -13,6 +10,18 @@ from nltk.corpus import stopwords
 from gensim.parsing.preprocessing import remove_stopwords
 import re
 import string
+try:
+    from nltk import wordnet 
+except:
+    nltk.download('wordnet')
+try:
+    from nltk import stopwords 
+except:
+    nltk.download('stopwords')
+try:
+    from nltk import averaged_perceptron_tagger 
+except:
+    nltk.download('averaged_perceptron_tagger')
 lem = WordNetLemmatizer()
 
 
