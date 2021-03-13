@@ -14,10 +14,16 @@ def compile_articles(fox=True, cnn=True, text=False):
     :return:
     """
     import json
+    import platform
+
+    if platform.system() == "Windows":
+        path = 'ArticleDatabaseExport\politics.json'
+    else:
+        path = 'ArticleDatabaseExport/politics.json'
 
     fox_articles = []
     cnn_articles = []
-    for line in open('articles.json', 'r', encoding = 'utf-8'):
+    for line in open(path, 'r', encoding = 'utf-8'):
         article = json.loads(line)
         if article['site'] == 'FOX':
             if text:
@@ -45,10 +51,14 @@ def compile_politics(fox=True, cnn=True, text=False):
     :return:
     """
     import json
-
+    import platform
     fox_articles = []
     cnn_articles = []
-    for line in open('politics.json', 'r', encoding = 'utf-8'):
+    if platform.system() == "Windows":
+        path = 'ArticleDatabaseExport\politics.json'
+    else:
+        path = 'ArticleDatabaseExport/politics.json'
+    for line in open(path, 'r', encoding='utf-8'):
         article = json.loads(line)
         if article['site'] == 'FOX':
             if text:
@@ -67,4 +77,22 @@ def compile_politics(fox=True, cnn=True, text=False):
     else:
         return cnn_articles, fox_articles
 
+
+def create_lsi(texts):
+    return 1
+
+
+def match_article(url, dictionary, corpus, lsi):
+    from newspaper import Article
+    from gensim import similarities
+    article = Article(url)
+    article.download()
+    article.parse()
+
+    vec_bow = dictionary.doc2bow(article.text.lower().split())
+    vec_lsi = lsi[vec_bow]
+    index = similarities.MatrixSimilarity(lsi[corpus])
+    sims = index[vec_lsi]
+    sims = sorted(enumerate(sims), key=lambda item: -item[1])
+    return sims[0:4]
 
