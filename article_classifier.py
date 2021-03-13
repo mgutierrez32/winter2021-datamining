@@ -19,7 +19,7 @@ def get_dictionary(cleaned_tokens_list):
     """
     Turns list of tokens into a dictionary with True.
     :param cleaned_tokens_list: List of lists of cleaned tokenized articles.
-    :return:
+    :return: Returns a dictionary with key as the word/feature and value as "True"
     """
     for tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tokens)
