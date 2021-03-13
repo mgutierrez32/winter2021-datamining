@@ -25,7 +25,7 @@ def get_dictionary(cleaned_tokens_list):
         yield dict([token, True] for token in tokens)
         
 # Compiling articles for dataset
-left_articles_text, right_articles_text = matchingArticles.compile_articles(text=True)
+left_articles_text, right_articles_text = matching_articles.compile_articles(text=True)
 
 left_cleaned_tokens_list = cleaning_article.run(left_articles_text)
 right_cleaned_tokens_list = cleaning_article.run(right_articles_text)
