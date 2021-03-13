@@ -11,7 +11,7 @@ from nltk import classify
 from nltk import NaiveBayesClassifier
 import newspaper
 import cleaning_article
-import matchingArticles
+import matching_articles
 import requests
 from sklearn.model_selection import train_test_split
 
