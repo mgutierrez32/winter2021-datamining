@@ -9,20 +9,11 @@ to how extreme the article leans towards one side or the other.
 
 from nltk import classify
 from nltk import NaiveBayesClassifier
-
 import newspaper
-
 import cleaning_article
 import matchingArticles
-
 import requests
-
-# Compiling articles for dataset
-left_articles_text, right_articles_text = matchingArticles.compile_articles(text=True)
-
-cleaning_article.run(left_articles_text)
-cleaning_article.run(right_articles_text)
-
+from sklearn.model_selection import train_test_split
 
 def get_dictionary(cleaned_tokens_list):
     """
@@ -32,7 +23,12 @@ def get_dictionary(cleaned_tokens_list):
     """
     for tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tokens)
+        
+# Compiling articles for dataset
+left_articles_text, right_articles_text = matchingArticles.compile_articles(text=True)
 
+left_cleaned_tokens_list = cleaning_article.run(left_articles_text)
+right_cleaned_tokens_list = cleaning_article.run(right_articles_text)
 
 left_tokens_for_model = list(get_dictionary(left_cleaned_tokens_list))
 right_tokens_for_model = list(get_dictionary(right_cleaned_tokens_list))
@@ -64,7 +60,7 @@ url_test = input('Copy an Article url Here: ')
 html = requests.get(url_test).text
 text = newspaper.fulltext(html)
 
-custom_tokens = DataCleaning(text)
+custom_tokens = cleaning_article.run(text)
 print('The article is predicted as: ', classifier.classify(dict([token, True] for token in custom_tokens)))
 
 dist = classifier.prob_classify(dict([token, True] for token in custom_tokens))
