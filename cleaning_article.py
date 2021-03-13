@@ -11,15 +11,15 @@ from gensim.parsing.preprocessing import remove_stopwords
 import re
 import string
 try:
-    from nltk import wordnet 
+    from nltk import wordnet
 except:
     nltk.download('wordnet')
 try:
-    from nltk import stopwords 
+    from nltk import stopwords
 except:
     nltk.download('stopwords')
 try:
-    from nltk import averaged_perceptron_tagger 
+    from nltk import averaged_perceptron_tagger
 except:
     nltk.download('averaged_perceptron_tagger')
 lem = WordNetLemmatizer()

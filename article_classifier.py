@@ -1,6 +1,5 @@
 """
 File used to classify articles using a Naive Bayes Classifier.
-
 Given an article URL, package will classify the article as
 left-leaning or right-leaning and give the probability that
 the article is left or right, as well as giving a score as
@@ -14,6 +13,7 @@ import cleaning_article
 import matching_articles
 import requests
 from sklearn.model_selection import train_test_split
+import time
 
 def get_dictionary(cleaned_tokens_list):
     """
@@ -23,7 +23,8 @@ def get_dictionary(cleaned_tokens_list):
     """
     for tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tokens)
-        
+
+start = time.time()
 # Compiling articles for dataset
 left_articles_text, right_articles_text = matching_articles.compile_politics(text=True)
 
@@ -52,6 +53,8 @@ classifier = NaiveBayesClassifier.train(Train)
 print("Accuracy is:", classify.accuracy(classifier, Test))
 
 print(classifier.show_most_informative_features(20))
+end = time.time()
+print("Runtime:", end - start)
 
 # Pass in url of article to classify
 url_test = input('Copy an Article url Here: ')

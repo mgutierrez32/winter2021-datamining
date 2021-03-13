@@ -47,7 +47,9 @@ def compile_politics(fox=True, cnn=True, text=False):
     """
     This function compiles articles from the json file
     export of our
-
+    :param fox:
+    :param cnn:
+    :param text:
     :return:
     """
     import json
@@ -79,20 +81,40 @@ def compile_politics(fox=True, cnn=True, text=False):
 
 
 def create_lsi(texts):
-    return 1
+    """
+
+    :param texts:
+    :return:
+    """
+    import cleaning_article
+    import gensim
+    texts = cleaning_article.run(texts)
+    dictionary = gensim.corpora.Dictionary(texts)
+    corpus = [dictionary.doc2bow(text) for text in texts]
+    lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=300)
+    return dictionary, corpus, lsi
 
 
 def match_article(url, dictionary, corpus, lsi):
+    """
+
+    :param url:
+    :param dictionary:
+    :param corpus:
+    :param lsi:
+    :return:
+    """
     from newspaper import Article
     from gensim import similarities
     article = Article(url)
     article.download()
     article.parse()
+    import cleaning_article
 
-    vec_bow = dictionary.doc2bow(article.text.lower().split())
+    vec_bow = dictionary.doc2bow(cleaning_article.run(article.text))
     vec_lsi = lsi[vec_bow]
     index = similarities.MatrixSimilarity(lsi[corpus])
     sims = index[vec_lsi]
     sims = sorted(enumerate(sims), key=lambda item: -item[1])
-    return sims[0:4]
+    return sims[0:5]
 
