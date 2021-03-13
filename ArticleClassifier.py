@@ -1,15 +1,28 @@
+"""
+File used to classify articles using a Naive Bayes Classifier.
+
+Given an article URL, package will classify the article as
+left-leaning or right-leaning and give the probability that
+the article is left or right, as well as giving a score as
+to how extreme the article leans towards one side or the other.
+"""
+
 from nltk import classify
 from nltk import NaiveBayesClassifier
 
-!pip3 install newspaper3k
 import newspaper
 
 import cleaning_article
-
-cleaning_article.run(train_left_text)
-cleaning_article.run(train_right_text)
+import matchingArticles
 
 import requests
+
+# Compiling articles for dataset
+left_articles_text, right_articles_text = matchingArticles.compile_articles(text=True)
+
+cleaning_article.run(left_articles_text)
+cleaning_article.run(right_articles_text)
+
 
 def get_dictionary(cleaned_tokens_list):
     """
@@ -20,20 +33,21 @@ def get_dictionary(cleaned_tokens_list):
     for tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tokens)
 
+
 left_tokens_for_model = list(get_dictionary(left_cleaned_tokens_list))
 right_tokens_for_model = list(get_dictionary(right_cleaned_tokens_list))
 
 # Tagging with Left and Right
 left_dataset = [(left_dict, "Left")
-                     for left_dict in left_tokens_for_model]
+                for left_dict in left_tokens_for_model]
 
 right_dataset = [(right_dict, "Right")
-                     for right_dict in right_tokens_for_model]
+                 for right_dict in right_tokens_for_model]
 
 dataset = left_dataset + right_dataset
 
 # Making train and test dataset split, 70/30
-Train, Test = train_test_split(dataset, random_state = 6741, test_size = 0.3)
+Train, Test = train_test_split(dataset, random_state=6741, test_size=0.3)
 
 # Build classifier
 classifier = NaiveBayesClassifier.train(Train)
@@ -46,11 +60,11 @@ print(classifier.show_most_informative_features(20))
 # Pass in url of article to classify
 url_test = input('Copy an Article url Here: ')
 
-# Webscrapes from a url
+# Webscrapes article text from a url
 html = requests.get(url_test).text
 text = newspaper.fulltext(html)
 
-custom_tokens = remove_noise(word_tokenize(DataCleaning(text)))
+custom_tokens = DataCleaning(text)
 print('The article is predicted as: ', classifier.classify(dict([token, True] for token in custom_tokens)))
 
 dist = classifier.prob_classify(dict([token, True] for token in custom_tokens))
