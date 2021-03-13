@@ -7,9 +7,9 @@ the article is left or right, as well as giving a score as
 to how extreme the article leans towards one side or the other.
 """
 import nltk
-nltk.download('wordnet')
-nltk.download('stopwords')
-nltk.download('averaged_perceptron_tagger')
+# nltk.download('wordnet')
+# nltk.download('stopwords')
+# nltk.download('averaged_perceptron_tagger')
 from nltk import classify
 from nltk import NaiveBayesClassifier
 import newspaper
