@@ -14,6 +14,8 @@ The actual accuracy of the model is `0.8302658486707567`. It also provides a lis
 
 <span style="color:orange;">Here I would like to add a .git of the usage of the code.</span>
 
+[#f03c15](Here I would like to add a .git of the usage of the code.)
+
 ---
 
 ### Instalation Guide
