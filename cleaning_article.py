@@ -1,17 +1,15 @@
 """
 File used to clean the articles. 
 """
-import nltk
-from nltk.corpus import wordnet as wn
+import nltk 
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
-from nltk.stem.wordnet import WordNetLemmatizer
-from nltk.corpus import stopwords
+from nltk.stem.wordnet import WordNetLemmatizer 
 from gensim.parsing.preprocessing import remove_stopwords
 import re
 import string
 try:
-    from nltk.corpus import wordnet
+    from nltk.corpus import wordnet as wn
 except:
     nltk.download('wordnet')
 try:
