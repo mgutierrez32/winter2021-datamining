@@ -2,7 +2,7 @@
 
 ### Authors: Miguel Gutierrez, Yue Shen and Ana Ysasi
 
-Final project for Dr. Anil Chaturvedi's class of Data Mining at the Univeristy of Chicago.
+Final project for Dr. Anil Chaturvedi's class of Data Mining at the Univeristy of Chicago for the MSC. in Analytics.
 
 ---
 
