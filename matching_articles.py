@@ -88,30 +88,31 @@ def create_lsi(texts):
     """
     import cleaning_article
     import gensim
-    texts = cleaning_article.run(texts)
+    from multiprocessing import Pool, TimeoutError
+
+    with Pool(processes=4) as pool:
+        texts = pool.map(cleaning_article.run, texts)
+
+    #texts = cleaning_article.run(texts)
     dictionary = gensim.corpora.Dictionary(texts)
     corpus = [dictionary.doc2bow(text) for text in texts]
     lsi = gensim.models.LsiModel(corpus, id2word=dictionary, num_topics=300)
     return dictionary, corpus, lsi
 
 
-def match_article(url, dictionary, corpus, lsi):
+def match_article(text, dictionary, corpus, lsi):
     """
 
-    :param url:
+    :param text:
     :param dictionary:
     :param corpus:
     :param lsi:
     :return:
     """
-    from newspaper import Article
     from gensim import similarities
-    article = Article(url)
-    article.download()
-    article.parse()
     import cleaning_article
 
-    vec_bow = dictionary.doc2bow(cleaning_article.run(article.text))
+    vec_bow = dictionary.doc2bow(cleaning_article.run(text))
     vec_lsi = lsi[vec_bow]
     index = similarities.MatrixSimilarity(lsi[corpus])
     sims = index[vec_lsi]
