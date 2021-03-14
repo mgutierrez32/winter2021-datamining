@@ -12,7 +12,7 @@ This repository classifies articles depending on the political inclination, givi
 
 The actual accuracy of the model is `0.8302658486707567`. It also provides a list of the `Most Informative Features`.
 
-
+<font color='red'>Here I would like to add a .git of the usage of the code.</font>
 
 ---
 
