@@ -10,11 +10,15 @@ Final project for Dr. Anil Chaturvedi's class of Data Mining at the Univeristy o
 
 This repository classifies articles depending on the political inclination, giving a porcentage of `rigth` and `left` leaning and a `extremity score`.
 
+The actual accuracy of the model is `0.8302658486707567`. It also provides a list of the `Most Informative Features`.
+
+
+
 ---
 
 ### Instalation Guide
 
-```
+```{python}
 pip3 install gitpython
 
 import os
