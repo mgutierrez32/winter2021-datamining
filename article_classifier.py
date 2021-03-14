@@ -13,8 +13,7 @@ import cleaning_article
 import matching_articles
 import requests
 from sklearn.model_selection import train_test_split
-from multiprocessing import Pool, TimeoutError
-import time
+from multiprocessing import Pool 
 
 def get_dictionary(cleaned_tokens_list):
     """
@@ -25,15 +24,13 @@ def get_dictionary(cleaned_tokens_list):
     for tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tokens)
 
-if __name__ == '__main__':
-    start = time.time()
+if __name__ == '__main__': 
     # Compiling articles for dataset
     left_articles_text, right_articles_text = matching_articles.compile_politics(text=True)
 
     with Pool(processes=4) as pool:
         left_cleaned_tokens_list = pool.map(cleaning_article.run, left_articles_text)
         right_cleaned_tokens_list = pool.map(cleaning_article.run, right_articles_text)
-    end = time.time()
 
     # left_cleaned_tokens_list = cleaning_article.run(left_articles_text)
     # right_cleaned_tokens_list = cleaning_article.run(right_articles_text)
@@ -59,9 +56,8 @@ if __name__ == '__main__':
     # Test Validation
     print("Accuracy is:", classify.accuracy(classifier, Test))
 
-    print(classifier.show_most_informative_features(20))
-
-    print("Runtime:", round(end - start, 4))
+    print(classifier.show_most_informative_features(20)) 
+    
     left_text, right_text = matching_articles.compile_articles()
     left_dictionary, left_corpus, left_lsi = matching_articles.create_lsi([i["text"] for i in left_text])
     right_dictionary, right_corpus, right_lsi = matching_articles.create_lsi([i["text"] for i in right_text])
