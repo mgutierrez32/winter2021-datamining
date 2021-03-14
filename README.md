@@ -20,7 +20,7 @@ The actual accuracy of the model is `0.8302658486707567`. It also provides a lis
 
 ### Instalation Guide
 
-```{python}
+```python
 pip3 install gitpython
 
 import os
