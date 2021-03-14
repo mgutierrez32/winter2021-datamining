@@ -18,7 +18,7 @@ The actual accuracy of the model is `0.8302658486707567`. It also provides a lis
 
 ![](DEMO.gif)
 
-![Demo of the code](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Demo of the code](https://github.com/mgutierrez32/winter2021-datamining/blob/main/Demo.gif)
 
 ---
 
