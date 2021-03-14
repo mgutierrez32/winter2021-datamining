@@ -30,7 +30,12 @@ Repo.clone_from("https://github.com/mgutierrez32/winter2021-datamining", "folder
 
 ### Quickstart Guide
 
-#### `ArticleDatabaseExport`
+#### Folder: `ArticleDatabaseExport`
+
+Json files of articles from CNN, fox, AP and NPR from Autumn quarter 2021. 
+
+* `Articles.json` have all the articles.
+* `politics.json` have only the political articles. This set was the one used to train the model.
 
 #### `article_classifier.py`
 
