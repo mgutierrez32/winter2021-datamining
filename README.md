@@ -2,7 +2,7 @@
 
 ### Authors: Miguel Gutierrez, Yue Shen and Ana Ysasi
 
-Final project for Dr. Anil Chaturvedi's class of Data Mining at the Univeristy of Chicago for the MSC. in Analytics.
+Final project for Dr. Anil Chaturvedi's Data Mining Principles course at the University of Chicago's Master of Science in Analytics.
 
 ---
 
@@ -37,6 +37,8 @@ Json files of articles from CNN, fox, AP and NPR from Autumn quarter 2021.
 * `Articles.json` have all the articles.
 * `politics.json` have only the political articles. This set was the one used to train the model.
 
+#### File: ``
+
 #### File: `cleaning_article.py`
 
 File used to clean the webscrapped articles. Takes care of removing the adds, tokenize the text and remove the most used words in the english language.
@@ -50,3 +52,5 @@ File used to match articles. Given an article URL, package will return the top 5
 File used to classify articles using a Naive Bayes Classifier.
 
 Given an article URL, the package will classify the article as left-leaning or right-leaning and give the probability that the article is left or right, as well as giving a score as to how extreme the article leans towards one side or the other.
+
+When run, this file also calls and implements the `matching_articles.py`file and returns headline of the closest CNN and FOX articles. 
