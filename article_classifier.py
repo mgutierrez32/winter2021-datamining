@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
     print(classifier.show_most_informative_features(20))
 
-    print("Runtime:", end - start)
+    print("Runtime:", round(end - start, 4))
     left_text, right_text = matching_articles.compile_articles()
     left_dictionary, left_corpus, left_lsi = matching_articles.create_lsi([i["text"] for i in left_text])
     right_dictionary, right_corpus, right_lsi = matching_articles.create_lsi([i["text"] for i in right_text])
@@ -93,12 +93,12 @@ if __name__ == '__main__':
             left_sims = matching_articles.match_article(article.text, left_dictionary, left_corpus, left_lsi)
             right_sims = matching_articles.match_article(article.text, right_dictionary, right_corpus, right_lsi)
             print(
-                '\nMatched CNN Article: \n' + str(left_text[left_sims[0][0]]["title"]) + "\nCosine Similarity: " + str(
-                    left_sims[0][1]))
+                '\nMatched CNN Article: \n' + str(left_text[left_sims[0][0]]["title"]) + "\nCosine Similarity: " + str(round(
+                    left_sims[0][1], 4)))
             print('\nMatched FOX Article: \n' + str(
-                right_text[right_sims[0][0]]["title"]) + "\nCosine Similarity: " + str(right_sims[0][1]))
+                right_text[right_sims[0][0]]["title"]) + "\nCosine Similarity: " + str(round(right_sims[0][1], 4)))
         except AttributeError:
             print('\nSorry, unable to parse text from News Site :( ')
 
-        url_test = input('\n\nCopy an Article URL Here Or Press q to Quit: ')
+        url_test = input('\n\nCopy an Article URL Here Or Enter q to Quit: ')
 
