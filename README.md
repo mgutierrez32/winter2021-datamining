@@ -13,7 +13,7 @@ By using the Naive Bayes Classifier, this repository rates articles depending on
 The actual accuracy of the model is `0.8302658486707567`. It also provides a list of the `Most Informative Features`.
  
 ```diff
-- Here I would like to add a .git of the usage of the code.
+- Here I would like to add a .gift of the usage of the code.
 ```
 
 ---
