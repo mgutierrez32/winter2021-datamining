@@ -37,15 +37,15 @@ Json files of articles from CNN, fox, AP and NPR from Autumn quarter 2021.
 * `Articles.json` have all the articles.
 * `politics.json` have only the political articles. This set was the one used to train the model.
 
-#### `cleaning_article.py`
+#### File: `cleaning_article.py`
 
 File used to clean the webscrapped articles. Takes care of removing the adds, tokenize the text and remove the most used words in the english language.
 
-#### `matching_articles.py`
+#### File: `matching_articles.py`
 
 File used to match articles. Given an article URL, package will return the top 5 matched articles from our database of CNN and FOX articles.
 
-#### `article_classifier.py`
+#### File: `article_classifier.py`
 
 File used to classify articles using a Naive Bayes Classifier.
 
