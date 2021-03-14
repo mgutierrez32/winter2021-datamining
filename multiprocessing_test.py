@@ -59,33 +59,32 @@ if __name__ == '__main__':
     # Test Validation
     print("Accuracy is:", classify.accuracy(classifier, Test))
 
-    print(classifier.show_most_informative_features(20))
+    print(classifier.show_most_informative_features(50))
 
     end = time.time()
     print("Runtime:", end - start)
 
-
-
-
-
-
     # Pass in url of article to classify
-    url_test = input('Copy an Article url Here: ')
+    url_test = input('\n\nCopy an Article URL Here Or Press q to Quit: ')
 
-    # Webscrapes article text from a url
-    html = requests.get(url_test).text
-    text = newspaper.fulltext(html)
+    while url_test != "q":
+        # Webscrapes article text from a url
+        html = requests.get(url_test).text
+        text = newspaper.fulltext(html)
 
-    custom_tokens = cleaning_article.run(text)
-    print('The article is predicted as: ', classifier.classify(dict([token, True] for token in custom_tokens)))
+        custom_tokens = cleaning_article.run(text)
+        print('The article is predicted as: ', classifier.classify(dict([token, True] for token in custom_tokens)))
 
-    dist = classifier.prob_classify(dict([token, True] for token in custom_tokens))
-    list(dist.samples())
+        dist = classifier.prob_classify(dict([token, True] for token in custom_tokens))
+        list(dist.samples())
 
-    left_prob = round(dist.prob('Left'), 4)
-    right_prob = round(dist.prob('Right'), 4)
-    print('Probability of being a left-leaning article:', left_prob)
-    print('Probability of being a right-leaning article:', right_prob)
+        left_prob = round(dist.prob('Left'), 4)
+        right_prob = round(dist.prob('Right'), 4)
+        print('Probability of being a left-leaning article:', left_prob)
+        print('Probability of being a right-leaning article:', right_prob)
 
-    ex_score = round(max(left_prob, right_prob) - min(left_prob, right_prob), 4)
-    print('Extremity score: ', ex_score)
+        ex_score = round(max(left_prob, right_prob) - min(left_prob, right_prob), 4)
+        print('Extremity score: ', ex_score)
+
+        url_test = input('\n\nCopy an Article URL Here Or Press q to Quit: ')
+
