@@ -14,7 +14,6 @@ import matching_articles
 import requests
 from sklearn.model_selection import train_test_split
 from multiprocessing import Pool, TimeoutError
-import time
 
 def get_dictionary(cleaned_tokens_list):
     """
@@ -26,7 +25,6 @@ def get_dictionary(cleaned_tokens_list):
         yield dict([token, True] for token in tokens)
 
 if __name__ == '__main__':
-    start = time.time()
     # Compiling articles for dataset
     left_articles_text, right_articles_text = matching_articles.compile_politics(text=True)
 
@@ -60,9 +58,6 @@ if __name__ == '__main__':
     print("Accuracy is:", classify.accuracy(classifier, Test))
 
     print(classifier.show_most_informative_features(50))
-
-    end = time.time()
-    print("Runtime:", end - start)
 
     # Pass in url of article to classify
     url_test = input('\n\nCopy an Article URL Here Or Press q to Quit: ')
