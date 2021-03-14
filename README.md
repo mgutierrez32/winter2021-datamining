@@ -4,6 +4,6 @@
 
 Final project for Dr. Anil Chaturvedi's class of Data Mining at the Univeristy of Chicago.
 
---
+---
 
 ### Instalation Guide
