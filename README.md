@@ -29,3 +29,11 @@ Repo.clone_from("https://github.com/mgutierrez32/winter2021-datamining", "folder
 ```
 
 ### Quickstart Guide
+
+#### `ArticleDatabaseExport`
+
+#### `article_classifier.py`
+
+#### `cleaning_article.py`
+
+#### `matching_articles.py`
