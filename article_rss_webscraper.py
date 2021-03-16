@@ -9,15 +9,10 @@ have been published. The program was originally running almost
 nonstop for 7 weeks (from 1/25/21 to 3/15/21).
 """
 
-import urllib.request,sys,time
-from bs4 import BeautifulSoup
-import requests
-import pandas as pd
 import time
 import json
 import feedparser
-import numpy as np
-from newspaper import Article
+import newspaper
 import platform
 
 if platform.system() == "Windows":
@@ -28,14 +23,14 @@ else:
 
 def get_and_upload(url, site, article_list):
     try:
-        article = Article(url)
+        article = newspaper.Article(url)
         article.download()
         article.parse()
         article.nlp()
         article_list.append({"site": site, "url": article.url, "title": article.title,
-                               "text": article.text, "keywords": article.keywords,
-                               "summary": article.summary, "meta-descr": article.meta_description})
-    except:
+                             "text": article.text, "keywords": article.keywords,
+                             "summary": article.summary, "meta-descr": article.meta_description})
+    except newspaper.ArticleException:
         print("Error 404 for Article")
 
 
@@ -58,7 +53,7 @@ if __name__ == '__main__':
         for i in range(len(d.entries)):
             if d.entries[i].id not in links:
                 links.append(d.entries[i].id)
-                get_and_upload(d.entries[i].id,'CNN')
+                get_and_upload(d.entries[i].id, 'CNN', articles)
         d = feedparser.parse('http://rss.cnn.com/rss/cnn_topstories.rss')
         for i in range(len(d.entries)):
             if d.entries[i].id not in links:
@@ -82,8 +77,6 @@ if __name__ == '__main__':
             if d.entries[i].link not in links:
                 links.append(d.entries[i].link)
                 get_and_upload(d.entries[i].link, 'AP', articles)
-        with open("ap_links.json", 'w') as f:
-            json.dump(links, f, indent=2)
         print(" AP: ", len(links), "\n")
 
         with open(path, "w") as outfile:
