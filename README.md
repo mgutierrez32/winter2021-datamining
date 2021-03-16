@@ -35,7 +35,7 @@ Json files of articles from CNN, fox, AP and NPR from Autumn quarter 2021.
 * `Articles.json` have all the articles.
 * `politics.json` have only the political articles. This set was the one used to train the model.
 
-#### File: ``
+#### File: `article_rss_webscraper.py`
 
 #### File: `cleaning_article.py`
 
@@ -52,3 +52,7 @@ File used to classify articles using a Naive Bayes Classifier.
 Given an article URL, the package will classify the article as left-leaning or right-leaning and give the probability that the article is left or right, as well as giving a score as to how extreme the article leans towards one side or the other.
 
 When run, this file also calls and implements the `matching_articles.py`file and returns headline of the closest CNN and FOX articles. 
+
+### File: `use_case.py`
+
+Example of a posible application of the article classifier. We have taken all the articles in our database (corresponding to all the articles published in Autumn quarter 2021) from NPR and AP and we have studied the percentage of left-leaning and rigth-leaning articles from each site.
