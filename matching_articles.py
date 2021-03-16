@@ -17,9 +17,9 @@ def compile_articles(fox=True, cnn=True, text=False):
     import platform
 
     if platform.system() == "Windows":
-        path = 'ArticleDatabaseExport\politics.json'
+        path = 'ArticleDatabaseExport\articles.json'
     else:
-        path = 'ArticleDatabaseExport/politics.json'
+        path = 'ArticleDatabaseExport/articles.json'
 
     fox_articles = []
     cnn_articles = []

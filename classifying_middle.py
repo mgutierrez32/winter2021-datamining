@@ -14,7 +14,7 @@ from multiprocessing import Pool
 from article_classifier import get_dictionary
 
 
-def compile_centrist_articles(ap=True, npr=True, text=False):
+def compile_centrist_articles():
     """
     This function compiles articles from the json file
     export of our
@@ -25,30 +25,19 @@ def compile_centrist_articles(ap=True, npr=True, text=False):
     import platform
 
     if platform.system() == "Windows":
-        path = 'ArticleDatabaseExport\politics.json'
+        path = 'ArticleDatabaseExport\articles.json'
     else:
-        path = 'ArticleDatabaseExport/politics.json'
+        path = 'ArticleDatabaseExport/articles.json'
 
     ap_articles = []
     npr_articles = []
-    for line in open(path, 'r', encoding = 'utf-8'):
+    for line in open(path, 'r', encoding='utf-8'):
         article = json.loads(line)
         if article['site'] == 'AP':
-            if text:
-                ap_articles.append(article['text'])
-            else:
-                ap_articles.append(article)
+            ap_articles.append(article['url'])
         elif article['site'] == 'NPR':
-            if text:
-                npr_articles.append(article['text'])
-            else:
-                npr_articles.append(article)
-    if ap and not npr:
-        return ap_articles
-    elif not ap and npr:
-        return npr_articles
-    else:
-        return npr_articles, ap_articles
+            npr_articles.append(article['url'])
+    return npr_articles, ap_articles
 
 
 if __name__ == '__main__':
@@ -86,3 +75,8 @@ if __name__ == '__main__':
     print(classifier.show_most_informative_features(20))
 
     npr_articles_text, ap_articles_text = compile_centrist_articles(text=True)
+
+    with Pool(processes=4) as pool:
+        npr_cleaned_tokens_list = pool.map(cleaning_article.run, npr_articles_text)
+        ap_cleaned_tokens_list = pool.map(cleaning_article.run, ap_articles_text)
+
