@@ -12,7 +12,7 @@ By using the Naive Bayes Classifier, this repository rates articles depending on
 
 The actual accuracy of the model is `0.8302658486707567`. It also provides a list of the `Most Informative Features`.
 
-![Demo of the code](https://github.com/mgutierrez32/winter2021-datamining/blob/main/Demo.gif)
+![Demo of the code](https://github.com/mgutierrez32/winter2021-datamining/blob/main/DEMO.gif)
 
 ---
 
