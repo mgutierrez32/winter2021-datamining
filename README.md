@@ -1,6 +1,6 @@
 # winter2021-datamining 
 
-### Authors: Miguel Gutierrez, Yue Shen and Ana Ysasi
+### Authors: Miguel Gutierrez, [Yue Shen](https://github.com/yzsshen) and [Ana Ysasi](https://github.com/anapysasi)
 
 Final project for Dr. Anil Chaturvedi's Data Mining Principles course at the University of Chicago's Master of Science in Analytics.
 
