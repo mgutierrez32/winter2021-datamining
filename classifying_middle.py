@@ -85,4 +85,4 @@ if __name__ == '__main__':
 
     print(classifier.show_most_informative_features(20))
 
-    npr_articles_text, ap_articles_text = matching_centrist_articles(text=True)
+    npr_articles_text, ap_articles_text = compile_centrist_articles(text=True)
