@@ -32,9 +32,6 @@ if __name__ == '__main__':
         left_cleaned_tokens_list = pool.map(cleaning_article.run, left_articles_text)
         right_cleaned_tokens_list = pool.map(cleaning_article.run, right_articles_text)
 
-    # left_cleaned_tokens_list = cleaning_article.run(left_articles_text)
-    # right_cleaned_tokens_list = cleaning_article.run(right_articles_text)
-
     left_tokens_for_model = list(get_dictionary(left_cleaned_tokens_list))
     right_tokens_for_model = list(get_dictionary(right_cleaned_tokens_list))
 

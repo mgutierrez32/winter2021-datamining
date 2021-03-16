@@ -3,12 +3,10 @@ File classifies articles from NPR and AP as left or right leaning
 based on Naive Based
 
 """
-from nltk import classify
 from nltk import NaiveBayesClassifier
 import newspaper
 import cleaning_article
 import matching_articles
-import requests
 from sklearn.model_selection import train_test_split
 from multiprocessing import Pool
 from article_classifier import get_dictionary
@@ -48,9 +46,6 @@ if __name__ == '__main__':
         left_cleaned_tokens_list = pool.map(cleaning_article.run, left_articles_text)
         right_cleaned_tokens_list = pool.map(cleaning_article.run, right_articles_text)
 
-    # left_cleaned_tokens_list = cleaning_article.run(left_articles_text)
-    # right_cleaned_tokens_list = cleaning_article.run(right_articles_text)
-
     left_tokens_for_model = list(get_dictionary(left_cleaned_tokens_list))
     right_tokens_for_model = list(get_dictionary(right_cleaned_tokens_list))
 
@@ -69,14 +64,41 @@ if __name__ == '__main__':
     # Build classifier
     classifier = NaiveBayesClassifier.train(Train)
 
-    # Test Validation
-    print("Accuracy is:", classify.accuracy(classifier, Test))
+    npr_articles_text, ap_articles_text = compile_centrist_articles()
 
-    print(classifier.show_most_informative_features(20))
+    sites = ['NPR', 'AP']
+    i = -1
+    for site in [npr_articles_text, ap_articles_text]:
+        i += 1
+        print('data for: left', sites[i])
+        total_left_prob = list()
+        total_right_prob = list()
+        total_ex_score = list()
+        for url in site:
+            try:
+                # Webscrapes article text from a url
+                article = newspaper.Article(url.strip())
+                article.download()
+                article.parse()
 
-    npr_articles_text, ap_articles_text = compile_centrist_articles(text=True)
+                custom_tokens = cleaning_article.run(article.text)
 
-    with Pool(processes=4) as pool:
-        npr_cleaned_tokens_list = pool.map(cleaning_article.run, npr_articles_text)
-        ap_cleaned_tokens_list = pool.map(cleaning_article.run, ap_articles_text)
+                dist = classifier.prob_classify(dict([token, True] for token in custom_tokens))
+                list(dist.samples())
 
+                left_prob = round(dist.prob('Left'), 4)
+                right_prob = round(dist.prob('Right'), 4)
+                total_left_prob.append(left_prob)
+                total_right_prob.append(right_prob)
+
+                ex_score = round(max(left_prob, right_prob) - min(left_prob, right_prob), 4)
+                total_ex_score.append(ex_score)
+            except AttributeError:
+                print('\nSorry, unable to parse text from News Site :( ')
+
+        NPR_total_left_prob = sum(total_left_prob)/len(total_left_prob)
+        NPR_total_right_prob = sum(total_right_prob)/len(total_right_prob)
+        NPR_total_ex_score_left = sum(total_ex_score)/len(total_ex_score)
+        print('Total left probability:', NPR_total_left_prob)
+        print('Total right probability:', NPR_total_right_prob)
+        print('Total ex_score probability:', NPR_total_ex_score_left)
