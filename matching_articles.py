@@ -21,20 +21,15 @@ def compile_articles(fox=True, cnn=True, text=False):
     else:
         path = 'ArticleDatabaseExport/articles.json'
 
-    fox_articles = []
-    cnn_articles = []
-    for line in open(path, 'r', encoding = 'utf-8'):
-        article = json.loads(line)
-        if article['site'] == 'FOX':
-            if text:
-                fox_articles.append(article['text'])
-            else:
-                fox_articles.append(article)
-        elif article['site'] == 'CNN':
-            if text:
-                cnn_articles.append(article['text'])
-            else:
-                cnn_articles.append(article)
+    articles = json.load(open(path, 'r', encoding='utf-8'))
+
+    if text:
+        fox_articles = [x["text"] for x in articles if x["site"] == "FOX"]
+        cnn_articles = [x["text"] for x in articles if x["site"] == "CNN"]
+    else:
+        fox_articles = [x for x in articles if x["site"] == "FOX"]
+        cnn_articles = [x for x in articles if x["site"] == "CNN"]
+
     if fox and not cnn:
         return fox_articles
     elif not fox and cnn:
@@ -54,24 +49,19 @@ def compile_politics(fox=True, cnn=True, text=False):
     """
     import json
     import platform
-    fox_articles = []
-    cnn_articles = []
     if platform.system() == "Windows":
         path = 'ArticleDatabaseExport\politics.json'
     else:
         path = 'ArticleDatabaseExport/politics.json'
-    for line in open(path, 'r', encoding='utf-8'):
-        article = json.loads(line)
-        if article['site'] == 'FOX':
-            if text:
-                fox_articles.append(article['text'])
-            else:
-                fox_articles.append(article)
-        elif article['site'] == 'CNN':
-            if text:
-                cnn_articles.append(article['text'])
-            else:
-                cnn_articles.append(article)
+
+    articles = json.load(open(path, 'r', encoding='utf-8'))
+
+    if text:
+        fox_articles = [x["text"] for x in articles if x["site"] == "FOX"]
+        cnn_articles = [x["text"] for x in articles if x["site"] == "CNN"]
+    else:
+        fox_articles = [x for x in articles if x["site"] == "FOX"]
+        cnn_articles = [x for x in articles if x["site"] == "CNN"]
     if fox and not cnn:
         return fox_articles
     elif not fox and cnn:
