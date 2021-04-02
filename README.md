@@ -8,7 +8,7 @@ Final project for Dr. Anil Chaturvedi's Data Mining Principles course at the Uni
 
 ### Description:
 
-By using the Naive Bayes Classifier, this repository rates articles depending on the political inclination, giving a porcentage of `rigth` and `left` leaning and a `extremity score` (how extreme the item leans to one side or the other).
+By using the Naive Bayes Classifier, this repository rates articles depending on the political inclination, giving a percentage of `right ` and `left` leaning and a `extremity score` (how extreme the item leans to one side or the other).
 
 The actual accuracy of the model is `0.8302658486707567`. It also provides a list of the `Most Informative Features`.
 
